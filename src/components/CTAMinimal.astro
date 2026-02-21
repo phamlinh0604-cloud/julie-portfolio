@@ -1,0 +1,106 @@
+---
+// Minimal CTA Component - Editorial Style
+---
+
+<section class="cta-minimal">
+  <div class="container-minimal">
+    <div class="cta-content-minimal">
+      <p class="cta-intro">Thanks for reading! Want to continue the conversation?</p>
+      
+      <a href="https://www.linkedin.com/in/linh-pham-khanh-vietnam/" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="cta-link-primary">
+        <span class="cta-text">Get in touch</span>
+        <span class="cta-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Minimal CTA Section - Editorial Typography */
+  .cta-minimal {
+    padding: 120px 0 100px;
+    background: #ffffff;
+    border-top: 1px solid #e5e5e5;
+  }
+  
+  .container-minimal {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+  }
+  
+  .cta-content-minimal {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  
+  /* Intro Text - Small Sans-Serif */
+  .cta-intro {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 200;
+    color: #666666;
+    margin: 0 0 var(--spacing-md) 0;
+    letter-spacing: 0.01em;
+  }
+  
+  /* Primary CTA Link - Large Serif */
+  .cta-link-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #1a1a1a;
+    position: relative;
+    width: fit-content;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #1a1a1a;
+    transition: all 0.3s ease;
+  }
+  
+  .cta-text {
+    font-family: 'Cochin', Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 100;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  
+  .cta-arrow {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Hover Effect - Arrow moves right, line thickens */
+  .cta-link-primary:hover {
+    border-bottom-width: 2px;
+  }
+  
+  .cta-link-primary:hover .cta-arrow {
+    transform: translateX(8px);
+  }
+  /* Responsive */
+  @media (max-width: 768px) {
+    .cta-minimal {
+      padding: 80px 0 60px;
+    }
+    
+    .container-minimal {
+      padding: 0 24px;
+    }
+    
+    .cta-intro {
+      font-size: var(--text-sm);
+    }
+    
+    .cta-link-primary:hover .cta-arrow {
+      transform: translateX(4px);
+    }
+  }
+</style>

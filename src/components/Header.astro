@@ -1,0 +1,189 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<header class="header">
+  <nav class="nav container">
+    <a href="/" class="logo">
+      <span class="logo-text">JULIE PHAM</span>
+    </a>
+    
+    <button class="mobile-toggle" aria-label="Toggle menu" id="mobile-toggle">
+      <span class="hamburger"></span>
+    </button>
+    
+    <ul class="nav-links" id="nav-links">
+      {navItems.map(item => (
+        <li>
+          <a 
+            href={item.href} 
+            class:list={['nav-link', { active: currentPath === item.href }]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-toggle');
+  const navLinks = document.getElementById('nav-links');
+  
+  if (toggle && navLinks) {
+    toggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      toggle.classList.toggle('active');
+    });
+  }
+</script>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 1000;
+  }
+  
+  .nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  
+  .logo-text {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+  }
+  
+  .hamburger {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    position: relative;
+    transition: var(--transition-base);
+  }
+  
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    transition: var(--transition-base);
+  }
+  
+  .hamburger::before {
+    top: -8px;
+  }
+  
+  .hamburger::after {
+    bottom: -8px;
+  }
+  
+  .mobile-toggle.active .hamburger {
+    background: transparent;
+  }
+  
+  .mobile-toggle.active .hamburger::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+  
+  .mobile-toggle.active .hamburger::after {
+    transform: rotate(-45deg);
+    bottom: 0;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: var(--spacing-lg);
+    list-style: none;
+  }
+  
+  .nav-link {
+    color: var(--color-text);
+    font-weight: 600;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 4px;
+    transition: var(--transition-fast);
+  }
+  
+  .nav-link:hover {
+    color: var(--color-accent);
+    background: var(--color-bg-secondary);
+  }
+  
+  .nav-link.active {
+    color: var(--color-accent);
+  }
+  
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .mobile-toggle {
+      display: block;
+    }
+    
+    .nav-links {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--spacing-lg);
+      gap: var(--spacing-md);
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: var(--transition-base);
+      pointer-events: none;
+    }
+    
+    .nav-links.active {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .nav-link {
+      display: block;
+      padding: var(--spacing-sm);
+      text-align: center;
+    }
+  }
+</style>

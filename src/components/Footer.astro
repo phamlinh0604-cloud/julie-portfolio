@@ -1,0 +1,31 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer-minimal">
+  <div class="container">
+    <p class="copyright">© {currentYear} Julie Pham. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .footer-minimal {
+    padding: var(--spacing-2xl) 0;
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--spacing-3xl);
+  }
+  
+  .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+  }
+  
+  .copyright {
+    text-align: center;
+    width: 100%;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+</style>

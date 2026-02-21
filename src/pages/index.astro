@@ -1,17 +1,553 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import CTAMinimal from '../components/CTAMinimal.astro';
+import { getCollection } from 'astro:content';
 
+// Get all projects and sort by order
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(project => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout 
+  title="Home" 
+  description="Julie Pham - Enthusiastic Product Manager specializing in fintech and digital products"
+>
+  <Hero />
+  
+  <!-- Featured Projects Section -->
+  <section class="projects-section-modern">
+    <div class="container-wide">
+      <h2 class="projects-section-title">Featured Projects</h2>
+      <p class="projects-section-subtitle">
+        Fintech solutions I've built to empower underserved communities
+      </p>
+      
+      <div class="projects-grid-modern">
+        {featuredProjects.map((project, index) => {
+          const colorClasses = ['project-image-coral', 'project-image-lavender', 'project-image-mint'];
+          const colorClass = colorClasses[index % 3];
+          
+          return (
+            <article class="project-article">
+              <a href={`/projects/${project.slug}`} class="project-article-link">
+                <div class={`project-image-wrapper ${colorClass}`}>
+                  <img 
+                    src={project.data.image} 
+                    alt={project.data.title}
+                    class="project-image"
+                  />
+                </div>
+                <h3 class="project-title-modern">{project.data.title}</h3>
+                <p class="project-summary">
+                  {project.data.description}
+                </p>
+                <span class="project-link-modern">view project →</span>
+              </a>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+  
+<!-- Selected Writing Section -->
+  <section class="writing-section">
+    <div class="container-wide">
+      <h2 class="writing-section-title">Selected Writing</h2>
+      
+      <div class="writing-grid-three">
+        <!-- Article 1 -->
+        <article class="writing-article">
+          <div class="article-image-wrapper article-image-blue">
+            <div class="article-illustration">
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Simple illustration placeholder - you can customize this -->
+                <rect x="50" y="50" width="300" height="200" fill="none" stroke="#1a1a1a" stroke-width="3" rx="10"/>
+                <circle cx="150" cy="120" r="40" fill="#00d4ff" stroke="#1a1a1a" stroke-width="3"/>
+                <rect x="210" y="80" width="80" height="80" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+                <line x1="100" y1="200" x2="300" y2="200" stroke="#1a1a1a" stroke-width="3"/>
+                <text x="200" y="240" text-anchor="middle" font-size="24" font-weight="bold" fill="#1a1a1a">FINTECH</text>
+              </svg>
+            </div>
+          </div>
+          <h3 class="article-title">Building Financial Products for the Underserved</h3>
+          <p class="article-summary">
+            How we designed digital lending products that served over 100,000 drivers and merchants, focusing on accessibility and financial inclusion in Southeast Asia.
+          </p>
+          <a href="/blog" class="article-link">read on</a>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="writing-article">
+          <div class="article-image-wrapper article-image-pink">
+            <div class="article-illustration">
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Grid pattern background -->
+                <defs>
+                  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+                  </pattern>
+                </defs>
+                <rect width="400" height="300" fill="url(#grid)"/>
+                <!-- Main illustration -->
+                <circle cx="120" cy="100" r="30" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+                <circle cx="280" cy="100" r="30" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+                <path d="M 120 130 L 280 130 L 280 200 L 120 200 Z" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+                <line x1="120" y1="100" x2="280" y2="100" stroke="#1a1a1a" stroke-width="3"/>
+                <text x="200" y="240" text-anchor="middle" font-size="20" font-weight="bold" fill="#1a1a1a">PRODUCT</text>
+              </svg>
+            </div>
+          </div>
+          <h3 class="article-title">Product Strategy in Emerging Markets</h3>
+          <p class="article-summary">
+            Lessons learned from launching fintech products across Southeast Asia, navigating regulatory challenges, cultural nuances, and building for diverse user segments.
+          </p>
+          <a href="/blog" class="article-link">read on</a>
+        </article>
+
+        <!-- Article 3 -->
+        <article class="writing-article">
+          <div class="article-image-wrapper article-image-green">
+            <div class="article-illustration">
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- AI/Technology themed illustration -->
+                <circle cx="200" cy="150" r="80" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+                <circle cx="200" cy="150" r="50" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+                <circle cx="200" cy="150" r="20" fill="#1a1a1a"/>
+                <line x1="120" y1="150" x2="80" y2="150" stroke="#1a1a1a" stroke-width="3"/>
+                <line x1="280" y1="150" x2="320" y2="150" stroke="#1a1a1a" stroke-width="3"/>
+                <line x1="200" y1="70" x2="200" y2="30" stroke="#1a1a1a" stroke-width="3"/>
+                <line x1="200" y1="230" x2="200" y2="270" stroke="#1a1a1a" stroke-width="3"/>
+                <text x="200" y="250" text-anchor="middle" font-size="24" font-weight="bold" fill="#1a1a1a">AI</text>
+              </svg>
+            </div>
+          </div>
+          <h3 class="article-title">The Future of AI in Product Management</h3>
+          <p class="article-summary">
+            Exploring how Large Language Models and AI are transforming product development, user research, and decision-making processes in modern product teams.
+          </p>
+          <a href="/blog" class="article-link">read on</a>
+        </article>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <!-- CTA Section - Minimal Editorial Style -->
+<CTAMinimal />
+</BaseLayout>
+
+<style>
+  /* Featured Projects Section - Modern Design */
+  .projects-section-modern {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-bg);
+  }
+
+  .projects-section-title {
+    font-size: var(--text-3xl);
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+    font-family: Georgia, 'Times New Roman', serif;
+    letter-spacing: -0.02em;
+  }
+
+  .projects-section-subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-3xl);
+    line-height: 1.6;
+    font-family: var(--font-sans);
+  }
+
+  /* Three Column Grid */
+  .projects-grid-modern {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-3xl);
+  }
+
+  .project-article {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-article-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    height: 100%;
+    transition: transform var(--transition-base);
+  }
+
+  .project-article-link:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Project Image with Colored Background */
+  .project-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+    overflow: hidden;
+    border: none;
+    transition: transform var(--transition-base);
+    position: relative;
+  }
+
+  .project-image-coral {
+    background: linear-gradient(135deg, #ffcfc9 0%, #ffb3ab 100%);
+  }
+
+  .project-image-lavender {
+    background: linear-gradient(135deg, #e5d4ff 0%, #d4bbff 100%);
+  }
+
+  .project-image-mint {
+    background: linear-gradient(135deg, #c9f5e8 0%, #abefd8 100%);
+  }
+
+  .project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+    opacity: 0.95;
+  }
+
+  .project-article-link:hover .project-image-wrapper {
+    transform: scale(1.02);
+  }
+
+  .project-article-link:hover .project-image {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  /* Typography - Serif Headings */
+  .project-title-modern {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: var(--text-2xl);
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--color-text);
+    margin: 0;
+    letter-spacing: -0.01em;
+    transition: color var(--transition-fast);
+  }
+
+  .project-article-link:hover .project-title-modern {
+    color: var(--color-accent);
+  }
+
+  /* Body Text - Sans Serif */
+  .project-summary {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    margin: 0;
+    letter-spacing: 0.01em;
+    flex: 1;
+  }
+
+  /* Minimalist Link */
+  .project-link-modern {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    transition: all var(--transition-fast);
+    display: inline-block;
+    margin-top: auto;
+  }
+
+  .project-article-link:hover .project-link-modern {
+    color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    transform: translateX(4px);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .projects-grid-modern {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-2xl);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .projects-grid-modern {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+    }
+
+    .projects-section-title {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .projects-section-subtitle {
+      font-size: var(--text-base);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .project-title-modern {
+      font-size: var(--text-xl);
+    }
+
+    .project-summary {
+      font-size: var(--text-sm);
+    }
+  }
+  .cta-section {
+    padding: var(--spacing-3xl) 0;
+  }
+  
+  .view-all {
+    text-align: center;
+  }
+  
+  /* Selected Writing Section - Elegant Design */
+  .writing-section {
+    padding: var(--spacing-3xl) 0 var(--spacing-3xl);
+    background: var(--color-bg);
+  }
+
+  .container-wide {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+  }
+
+  .writing-section-title {
+    font-size: var(--text-3xl);
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: var(--spacing-3xl);
+    color: var(--color-text);
+    font-family: Georgia, 'Times New Roman', serif;
+    letter-spacing: -0.02em;
+  }
+
+  /* Three Column Grid */
+  .writing-grid-three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-3xl);
+  }
+
+  .writing-article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  /* Article Image with Colored Background */
+  .article-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+    overflow: hidden;
+    border: none;
+    transition: transform var(--transition-base);
+    position: relative;
+    background: var(--color-bg-secondary);
+  }
+
+  .article-image-blue {
+    background: linear-gradient(135deg, #a8daff 0%, #7ec8ff 100%);
+  }
+
+  .article-image-pink {
+    background: linear-gradient(135deg, #ffd4e5 0%, #ffb8d4 100%);
+  }
+
+  .article-image-green {
+    background: linear-gradient(135deg, #b4f8c8 0%, #88e5a8 100%);
+  }
+
+  .article-illustration {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+  }
+
+  .article-illustration svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .writing-article:hover .article-image-wrapper {
+    transform: scale(1.02);
+  }
+
+  /* Typography - Serif Headings */
+  .article-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: var(--text-2xl);
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--color-text);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* Body Text - Sans Serif */
+  .article-summary {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+
+  /* Minimalist Link */
+  .article-link {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    transition: all var(--transition-fast);
+    display: inline-block;
+    margin-top: auto;
+  }
+
+  .article-link:hover {
+    color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    transform: translateX(4px);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .writing-grid-three {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-2xl);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .writing-grid-three {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+    }
+
+    .writing-section-title {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .article-title {
+      font-size: var(--text-xl);
+    }
+
+    .container-wide {
+      padding: 0 var(--spacing-lg);
+    }
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .cta-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .cta-title {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .cta-text {
+    font-size: var(--text-xl);
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: var(--text-base);
+    transition: all var(--transition-base);
+    text-align: center;
+  }
+  
+  .btn-primary {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .btn-primary:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+  }
+  
+  .btn-secondary:hover {
+    background: var(--color-accent);
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .cta-buttons {
+      flex-direction: column;
+    }
+    
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
