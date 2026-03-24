@@ -1,13 +1,8 @@
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
+// https://astro.build/config;
+
 export default defineConfig({
-  site: 'https://julie-portfolio.netlify.app', // You can update this later
-  base: '/',
-  markdown: {
-    shikiConfig: {
-      theme: 'github-light',
-      wrap: true
-    }
-  }
+  site: 'https://github.com/phamlinh0604-cloud/', 
+  base: '/julie-portfolio', 
 });
