@@ -1,5 +1,5 @@
 ---
-title: "Building a Bank Policy Assistant through RAG"
+title: "Bank Policy Assistant through RAG"
 description: "A privacy-first AI assistant that gives bank employees instant access to internal policy documents without a single byte of data leaving the corporate firewall."
 image: "images/projects/bank-policy.jpg"
 featured: true
