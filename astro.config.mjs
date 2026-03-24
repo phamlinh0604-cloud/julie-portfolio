@@ -1,8 +1,7 @@
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config;
-
+// https://astro.build/config
 export default defineConfig({
-  site: 'https://phamlinh0604-cloud.github.io', 
-  base: '/julie-portfolio', 
+  site: 'https://www.klinhpham.com', 
+  
 });
