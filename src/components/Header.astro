@@ -2,11 +2,10 @@
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { label: 'Home',     href: import.meta.env.BASE_URL }, 
-  
-  { label: 'Projects', href: `${import.meta.env.BASE_URL}projects` },
-  { label: 'Blog',     href: `${import.meta.env.BASE_URL}blog` },
-  { label: 'About',    href: `${import.meta.env.BASE_URL}about` },
+  { label: 'Home',     href: `${import.meta.env.BASE_URL}/` }, 
+  { label: 'Projects', href: `${import.meta.env.BASE_URL}/projects` },
+  { label: 'Blog',     href: `${import.meta.env.BASE_URL}/blog` },
+  { label: 'About',    href: `${import.meta.env.BASE_URL}/about` },
 ];
 ---
 
