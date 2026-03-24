@@ -6,6 +6,7 @@ import CTAMinimal from '../components/CTAMinimal.astro';
 import { getCollection } from 'astro:content';
 
 // Get all projects and sort by order
+const SHOW_WRITING = false; 
 const allProjects = await getCollection('projects');
 const featuredProjects = allProjects
   .filter(project => project.data.featured)
@@ -15,47 +16,61 @@ const featuredProjects = allProjects
 
 <BaseLayout 
   title="Home" 
-  description="Julie Pham - Enthusiastic Product Manager specializing in fintech and digital products"
+  description="Linh Pham (Julie) - Enthusiastic Product Manager specializing in fintech and digital products"
 >
   <Hero />
   
   <!-- Featured Projects Section -->
-  <section class="projects-section-modern">
-    <div class="container-wide">
-      <h2 class="projects-section-title">Featured Projects</h2>
-      <p class="projects-section-subtitle">
-        Fintech solutions I've built to empower underserved communities
-      </p>
-      
-      <div class="projects-grid-modern">
-        {featuredProjects.map((project, index) => {
-          const colorClasses = ['project-image-coral', 'project-image-lavender', 'project-image-mint'];
-          const colorClass = colorClasses[index % 3];
-          
-          return (
-            <article class="project-article">
-              <a href={`/projects/${project.slug}`} class="project-article-link">
-                <div class={`project-image-wrapper ${colorClass}`}>
-                  <img 
-                    src={project.data.image} 
-                    alt={project.data.title}
-                    class="project-image"
-                  />
-                </div>
-                <h3 class="project-title-modern">{project.data.title}</h3>
-                <p class="project-summary">
-                  {project.data.description}
-                </p>
-                <span class="project-link-modern">view project →</span>
+<section class="projects-section">
+  <div class="projects-container">
+    <h2 class="projects-heading">Selected work</h2>
+
+    <div class="projects-list">
+      {featuredProjects.map((project) => (
+        <article class="project-row">
+
+        <!-- Left: Image -->
+        <div class="project-image-col">
+          <a href={`/projects/${project.slug}`} class="project-image-link">
+            <img
+              src={project.data.image}
+              alt={project.data.title}
+              class="project-img"
+            />
+          </a>
+        </div>
+
+          <!-- Right: Text -->
+          <div class="project-text-col">
+            <h3 class="project-title">
+              <a href={`/projects/${project.slug}`} class="project-title-link">
+                {project.data.title}
               </a>
-            </article>
-          );
-        })}
-      </div>
+            </h3>
+
+            {project.data.role && (
+              <p class="project-meta">
+                <strong>{project.data.role}</strong>
+                {project.data.company && `, ${project.data.company}`}
+                {project.data.year && `, ${project.data.year}`}
+              </p>
+            )}
+
+            <p class="project-description">{project.data.description}</p>
+
+            <a href={`/projects/${project.slug}`} class="project-learn-more">
+              Learn more about {project.data.title} →
+            </a>
+          </div>
+
+        </article>
+      ))}
     </div>
-  </section>
+  </div>
+</section>
   
 <!-- Selected Writing Section -->
+ {SHOW_WRITING && (
   <section class="writing-section">
     <div class="container-wide">
       <h2 class="writing-section-title">Selected Writing</h2>
@@ -136,7 +151,7 @@ const featuredProjects = allProjects
       </div>
     </div>
   </section>
-  
+)}  
   <!-- CTA Section -->
   <!-- CTA Section - Minimal Editorial Style -->
 <CTAMinimal />
@@ -149,89 +164,78 @@ const featuredProjects = allProjects
     background: var(--color-bg);
   }
 
-  .projects-section-title {
-    font-size: var(--text-3xl);
-    font-weight: 400;
-    text-align: left;
-    margin-bottom: var(--spacing-md);
-    color: var(--color-text);
-    font-family: Georgia, 'Times New Roman', serif;
-    letter-spacing: -0.02em;
+  .projects-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
   }
 
-  .projects-section-subtitle {
-    font-size: var(--text-lg);
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-3xl);
-    line-height: 1.6;
-    font-family: var(--font-sans);
+  .projects-heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--spacing-lg) 0;
   }
 
-  /* Three Column Grid */
-  .projects-grid-modern {
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-3xl);
+    grid-template-columns: 5fr 7fr;
+    gap: 72px;
+    align-items: center;
+    padding: var(--spacing-1xl) 0;
+    min-width: 0;
   }
 
-  .project-article {
-    display: flex;
-    flex-direction: column;
+  .project-row:last-child {
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .project-article-link {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
-    height: 100%;
-    transition: transform var(--transition-base);
-  }
-
-  .project-article-link:hover {
-    transform: translateY(-4px);
-  }
-
-  /* Project Image with Colored Background */
-  .project-image-wrapper {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border-radius: 0;
+  /* Image column — constrained, no overflow */
+  .project-image-col {
+    min-width: 0;          /* critical: stops grid blowout */
     overflow: hidden;
-    border: none;
-    transition: transform var(--transition-base);
-    position: relative;
   }
 
-  .project-image-coral {
-    background: linear-gradient(135deg, #ffcfc9 0%, #ffb3ab 100%);
+  .project-image-link {
+    display: block;
+    overflow: hidden;
+    line-height: 0;
   }
 
-  .project-image-lavender {
-    background: linear-gradient(135deg, #e5d4ff 0%, #d4bbff 100%);
-  }
-
-  .project-image-mint {
-    background: linear-gradient(135deg, #c9f5e8 0%, #abefd8 100%);
-  }
-
-  .project-image {
+  .project-img {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     display: block;
-    transition: transform var(--transition-base), opacity var(--transition-base);
-    opacity: 0.95;
+    transition: transform 0.5s ease, opacity 0.4s ease;
   }
 
-  .project-article-link:hover .project-image-wrapper {
-    transform: scale(1.02);
+  .project-image-link:hover .project-img {
+    transform: scale(1.03);
+    opacity: 0.9;
   }
 
-  .project-article-link:hover .project-image {
-    transform: scale(1.05);
-    opacity: 1;
+  /* Text column */
+  .project-text-col {
+    min-width: 0;          /* critical: stops text overflowing */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.75rem, 2.8vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.25rem 0;
   }
 
   /* Typography - Serif Headings */
@@ -281,44 +285,22 @@ const featuredProjects = allProjects
     transform: translateX(4px);
   }
 
-  /* Responsive Design */
-  @media (max-width: 1024px) {
-    .projects-grid-modern {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--spacing-2xl);
+  /* Responsive */
+  @media (max-width: 900px) {
+    .project-row {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
     }
   }
 
-  @media (max-width: 768px) {
-    .projects-grid-modern {
+  @media (max-width: 640px) {
+    .projects-container { padding: 0 24px; }
+    .project-row {
       grid-template-columns: 1fr;
-      gap: var(--spacing-xl);
+      gap: 28px;
+      padding: var(--spacing-2xl) 0;
     }
-
-    .projects-section-title {
-      font-size: var(--text-2xl);
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .projects-section-subtitle {
-      font-size: var(--text-base);
-      margin-bottom: var(--spacing-2xl);
-    }
-
-    .project-title-modern {
-      font-size: var(--text-xl);
-    }
-
-    .project-summary {
-      font-size: var(--text-sm);
-    }
-  }
-  .cta-section {
-    padding: var(--spacing-3xl) 0;
-  }
-  
-  .view-all {
-    text-align: center;
+    .project-title { font-size: 1.75rem; }
   }
   
   /* Selected Writing Section - Elegant Design */

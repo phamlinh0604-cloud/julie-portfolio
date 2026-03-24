@@ -2,28 +2,24 @@
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { label: 'Home', href: '/' },
+  { label: 'Home',     href: '/' },
   { label: 'Projects', href: '/projects' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'About', href: '/about' },
+  { label: 'Blog',     href: '/blog' },
+  { label: 'About',   href: '/about' },
 ];
 ---
 
 <header class="header">
-  <nav class="nav container">
-    <a href="/" class="logo">
-      <span class="logo-text">JULIE PHAM</span>
-    </a>
-    
-    <button class="mobile-toggle" aria-label="Toggle menu" id="mobile-toggle">
-      <span class="hamburger"></span>
-    </button>
-    
+  <nav class="nav">
+    <!-- Wordmark -->
+    <a href="/" class="logo">Julie Pham</a>
+
+    <!-- Desktop Nav -->
     <ul class="nav-links" id="nav-links">
       {navItems.map(item => (
         <li>
-          <a 
-            href={item.href} 
+          <a
+            href={item.href}
             class:list={['nav-link', { active: currentPath === item.href }]}
           >
             {item.label}
@@ -31,159 +27,178 @@ const navItems = [
         </li>
       ))}
     </ul>
+
+    <!-- Mobile hamburger -->
+    <button class="mobile-toggle" aria-label="Toggle menu" id="mobile-toggle">
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
   </nav>
 </header>
 
 <script>
   const toggle = document.getElementById('mobile-toggle');
   const navLinks = document.getElementById('nav-links');
-  
   if (toggle && navLinks) {
     toggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      toggle.classList.toggle('active');
+      navLinks.classList.toggle('open');
+      toggle.classList.toggle('open');
     });
   }
 </script>
 
 <style>
+  /* ─── Header Shell ───────────────────────────────────────────────── */
   .header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    height: var(--header-height);
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--color-border);
     z-index: 1000;
+    /* Fully transparent — no background, no border, like Nico */
+    background: transparent;
+    padding: 32px 0;
+    transition: background 0.3s ease, padding 0.3s ease;
   }
-  
+
+  /* Subtle white wash on scroll so links stay readable */
+  .header.scrolled {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 20px 0;
+  }
+
+  /* ─── Nav Row ────────────────────────────────────────────────────── */
   .nav {
-    height: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  
+
+  /* ─── Wordmark ───────────────────────────────────────────────────── */
   .logo {
-    font-size: var(--text-xl);
-    font-weight: 700;
-    color: var(--color-text);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #1a1a1a;
     text-decoration: none;
+    transition: opacity 0.2s ease;
   }
-  
-  .logo-text {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+
+  .logo:hover {
+    opacity: 0.5;
   }
-  
+
+  /* ─── Nav Links ──────────────────────────────────────────────────── */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    font-size: 0.8125rem;             /* 13px — same tight size as Nico */
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: #1a1a1a;
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .nav-link:hover {
+    opacity: 0.5;
+    border-bottom-color: transparent;
+  }
+
+  /* Active state: underline only, no colour change */
+  .nav-link.active {
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  /* ─── Mobile Toggle ──────────────────────────────────────────────── */
   .mobile-toggle {
     display: none;
+    flex-direction: column;
+    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: var(--spacing-xs);
+    padding: 4px;
   }
-  
-  .hamburger {
+
+  .bar {
     display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--color-text);
-    position: relative;
-    transition: var(--transition-base);
+    width: 22px;
+    height: 1px;
+    background: #1a1a1a;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    transform-origin: center;
   }
-  
-  .hamburger::before,
-  .hamburger::after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 2px;
-    background: var(--color-text);
-    transition: var(--transition-base);
+
+  /* Animate to × on open */
+  .mobile-toggle.open .bar:nth-child(1) {
+    transform: translateY(3.5px) rotate(45deg);
   }
-  
-  .hamburger::before {
-    top: -8px;
+  .mobile-toggle.open .bar:nth-child(2) {
+    transform: translateY(-3.5px) rotate(-45deg);
   }
-  
-  .hamburger::after {
-    bottom: -8px;
-  }
-  
-  .mobile-toggle.active .hamburger {
-    background: transparent;
-  }
-  
-  .mobile-toggle.active .hamburger::before {
-    transform: rotate(45deg);
-    top: 0;
-  }
-  
-  .mobile-toggle.active .hamburger::after {
-    transform: rotate(-45deg);
-    bottom: 0;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: var(--spacing-lg);
-    list-style: none;
-  }
-  
-  .nav-link {
-    color: var(--color-text);
-    font-weight: 600;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: 4px;
-    transition: var(--transition-fast);
-  }
-  
-  .nav-link:hover {
-    color: var(--color-accent);
-    background: var(--color-bg-secondary);
-  }
-  
-  .nav-link.active {
-    color: var(--color-accent);
-  }
-  
-  /* Mobile Styles */
+
+  /* ─── Responsive ─────────────────────────────────────────────────── */
   @media (max-width: 768px) {
-    .mobile-toggle {
-      display: block;
+    .nav {
+      padding: 0 24px;
     }
-    
+
+    .mobile-toggle {
+      display: flex;
+    }
+
     .nav-links {
       position: fixed;
-      top: var(--header-height);
+      top: 0;
       left: 0;
       right: 0;
+      bottom: 0;
+      background: #ffffff;
       flex-direction: column;
-      background: var(--color-bg);
-      border-bottom: 1px solid var(--color-border);
-      padding: var(--spacing-lg);
-      gap: var(--spacing-md);
-      transform: translateY(-100%);
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
       opacity: 0;
-      transition: var(--transition-base);
       pointer-events: none;
+      transition: opacity 0.3s ease;
     }
-    
-    .nav-links.active {
-      transform: translateY(0);
+
+    .nav-links.open {
       opacity: 1;
       pointer-events: auto;
     }
-    
+
     .nav-link {
-      display: block;
-      padding: var(--spacing-sm);
-      text-align: center;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
     }
   }
 </style>
+
+<!-- Scroll listener: add .scrolled class to header -->
+<script>
+  const header = document.querySelector('.header');
+  if (header) {
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+  }
+</script>

@@ -13,17 +13,12 @@ import CTAMinimal from '../components/CTAMinimal.astro';
       <section class="intro-section">
         <div class="intro-content">
           <div class="avatar-wrapper">
-            <!-- Add your avatar image here later -->
-            <div class="avatar-placeholder">
-              <span class="avatar-initials">JP</span>
-            </div>
-            <!-- When you have your image, replace the div above with: -->
-            <!-- <img src="/images/avatar.jpg" alt="Julie Pham" class="avatar" /> -->
+            <img src="/images/avatar/ava2.jpg" alt="Julie Pham" class="avatar" />
           </div>
           <div class="intro-text">
             <h1 class="page-title">About Me</h1>
             <p class="lead">
-              Hi, I'm Julie and I am a fintech professional who is currently pursuing a Master's in Information Management at KU Leuven.
+              Hi, I'm Julie Pham and I am a product manager enthusiastic about turning AI capabilities into scalable, business-driven solutions.
             </p>
           </div>
         </div>
@@ -34,7 +29,7 @@ import CTAMinimal from '../components/CTAMinimal.astro';
         <h2 class="section-heading">My Story</h2>
         <div class="story-content">
           <p>
-            My professional background is in Project management, Business and Product strategy from my work at <strong>Grab</strong> and <strong>Techcombank</strong>.
+            My professional background is in Business and Product strategy and management, developed through my experience at <strong>Grab</strong> and <strong>Techcombank</strong>.
           </p>
           <p>
             I led teams around making digital financial products, focusing on SMEs and individuals who are underserved by traditional financial services. I've led cross-functional teams to build shop-now-pay-later products for small business owners & cash loan products for drivers and small business owners from 0 to 1.
@@ -44,10 +39,13 @@ import CTAMinimal from '../components/CTAMinimal.astro';
       
       <!-- Why I Do This Section -->
       <section class="motivation-section">
-        <h2 class="section-heading">Why I Do This</h2>
+        <h2 class="section-heading">My learning journey</h2>
         <div class="motivation-content">
           <p>
-            These experiences sparked my curiosity about how technology, data, and AI can further transform digital products. That's why I took a year to deepen my understanding of information management and emerging technologies, preparing myself to grow into a product manager who can build digital solutions that bridge business needs with user impact.
+            These experiences sparked my curiosity about how technology, data, and AI can further transform digital products. 
+          </p>
+          <p>  
+            That's why I spent a year pursuing a master’s degree in <strong>Information Management</strong> at KU Leuven, deepening my understanding of emerging technologies and preparing myself to grow into a product manager who can build digital solutions that bridge business needs with user impact.
           </p>
         </div>
       </section>
@@ -55,22 +53,55 @@ import CTAMinimal from '../components/CTAMinimal.astro';
       <!-- Current Focus Section -->
       <section class="current-section">
         <h2 class="section-heading">What I'm Learning Now</h2>
+        
         <div class="current-grid">
-          <div class="current-card">
-            <div class="card-icon">🤖</div>
-            <h3>Large Language Models (LLM)</h3>
-            <p>Exploring how LLMs can enhance product experiences and create new value for users.</p>
-          </div>
-          <div class="current-card">
-            <div class="card-icon">🧠</div>
-            <h3>AI Applications</h3>
-            <p>Researching practical applications of AI in fintech and digital products.</p>
-          </div>
-          <div class="current-card">
-            <div class="card-icon">📊</div>
-            <h3>Information Management</h3>
-            <p>Studying how to leverage data and information systems to drive product decisions.</p>
-          </div>
+          <article class="current-card">
+            <div class="card-image-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <path d="m11.5 11.5 2.5-2.5"></path>
+                <path d="m11.5 6.5 2.5 2.5"></path>
+                <path d="M9 9h.01"></path>
+                <path d="M14 9h.01"></path>
+              </svg>
+            </div>
+            <h3 class="card-title">Large Language Models</h3>
+            <p class="card-desc">Researching LLMs, information retrieval and soft guardrails to design reliable, governed AI applications and advanced agentic workflows.</p>
+          </article>
+
+          <article class="current-card">
+            <div class="card-image-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                <rect x="9" y="9" width="6" height="6"></rect>
+                <line x1="9" y1="1" x2="9" y2="4"></line>
+                <line x1="15" y1="1" x2="15" y2="4"></line>
+                <line x1="9" y1="20" x2="9" y2="23"></line>
+                <line x1="15" y1="20" x2="15" y2="23"></line>
+                <line x1="20" y1="9" x2="23" y2="9"></line>
+                <line x1="20" y1="14" x2="23" y2="14"></line>
+                <line x1="1" y1="9" x2="4" y2="9"></line>
+                <line x1="1" y1="14" x2="4" y2="14"></line>
+              </svg>
+            </div>
+            <h3 class="card-title">Requirement Engineering</h3>
+            <p class="card-desc">Applying my expertise in domain modeling to translate ambiguous client needs into concrete, technically feasible, and scalable AI architectures.</p>
+          </article>
+
+          <article class="current-card">
+            <div class="card-image-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m5 8 6 6"></path>
+                <path d="m4 14 6-6 2-3"></path>
+                <path d="M2 5h12"></path>
+                <path d="M7 2h1"></path>
+                <path d="m22 22-5-10-5 10"></path>
+                <path d="M14 18h6"></path>
+              </svg>
+            </div>
+            <h3 class="card-title">Dutch Language</h3>
+            <p class="card-desc">Learning Dutch to better immerse myself in Belgian culture and communicate confidently in professional and personal situations.</p>
+          </article>
         </div>
       </section>
       
@@ -81,35 +112,36 @@ import CTAMinimal from '../components/CTAMinimal.astro';
           <div class="timeline-item">
             <div class="timeline-marker"></div>
             <div class="timeline-content">
-              <h3 class="timeline-title">Grab</h3>
-              <p class="timeline-role">Product Manager - Financial Services</p>
-              <p class="timeline-description">
-                Led development of digital loan products for drivers and merchants, serving underserved communities across Southeast Asia.
-              </p>
-            </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <h3 class="timeline-title">Techcombank</h3>
-              <p class="timeline-role">Business & Product Strategy</p>
-              <p class="timeline-description">
-                Developed shop-now-pay-later solutions for small business owners, increasing access to working capital and business growth opportunities.
-              </p>
-            </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <h3 class="timeline-title">KU Leuven</h3>
+              <h3 class="timeline-title">KU Leuven [2025 - Current]</h3>
               <p class="timeline-role">Master's in Information Management</p>
               <p class="timeline-description">
                 Currently deepening knowledge in emerging technologies, data management, and AI applications for digital products.
               </p>
             </div>
           </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Grab [2021 - 2025]</h3>
+              <p class="timeline-role">Assistant Manager - Financial Services</p>
+              <p class="timeline-description">
+                Led development of digital loan products for individuals and SMEs, serving underserved communities.
+              </p>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Techcombank [2018 - 2021]</h3>
+              <p class="timeline-role">Product Management</p>
+              <p class="timeline-description">
+                Product Owner of account services for corporate customer segment. Designed tailored cash management solutions for corporates, streamlining fund management for enhanced financial efficiency.
+              </p>
+            </div>
+          </div>
+          
         </div>
       </section>
       
@@ -146,7 +178,7 @@ import CTAMinimal from '../components/CTAMinimal.astro';
     height: 200px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid var(--color-accent);
+    border: 0px solid var(--color-accent);
   }
   
   .avatar-placeholder {
