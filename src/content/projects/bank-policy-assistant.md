@@ -1,7 +1,7 @@
 ---
 title: "Building a Bank Policy Assistant through RAG"
 description: "A privacy-first AI assistant that gives bank employees instant access to internal policy documents without a single byte of data leaving the corporate firewall."
-image: "/julie-portfolio/images/projects/bank-policy.jpg"
+image: "images/projects/bank-policy.jpg"
 featured: true
 order: 1
 role: "Product Manager & AI Engineer"

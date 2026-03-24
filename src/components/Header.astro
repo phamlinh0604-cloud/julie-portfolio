@@ -3,16 +3,16 @@ const currentPath = Astro.url.pathname;
 
 const navItems = [
   { label: 'Home',     href: '/' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Blog',     href: '/blog' },
-  { label: 'About',   href: '/about' },
+  { label: 'Projects', href={${import.meta.env.BASE_URL}projects} },
+  { label: 'Blog',     href={${import.meta.env.BASE_URL}blog} },
+  { label: 'About',   href={${import.meta.env.BASE_URL}about} },
 ];
 ---
 
 <header class="header">
   <nav class="nav">
     <!-- Wordmark -->
-    <a href="/" class="logo">Julie Pham</a>
+    <a href={import.meta.env.BASE_URL} class="logo">Julie Pham</a>
 
     <!-- Desktop Nav -->
     <ul class="nav-links" id="nav-links">

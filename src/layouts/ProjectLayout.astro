@@ -32,7 +32,10 @@ const { frontmatter } = Astro.props;
         <!-- ── Hero image ─────────────────────────────────────── -->
         {frontmatter.image && (
           <div class="project-hero">
-            <img src={frontmatter.image} alt={frontmatter.title} />
+            <img 
+              src={`${import.meta.env.BASE_URL}${frontmatter.image}`} 
+              alt={frontmatter.title} 
+            />
           </div>
         )}
 
