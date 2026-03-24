@@ -1,7 +1,7 @@
 ---
 title: "Building a Bank Policy Assistant through RAG"
 description: "A privacy-first AI assistant that gives bank employees instant access to internal policy documents without a single byte of data leaving the corporate firewall."
-image: "/images/projects/bank-policy.jpg"
+image: "/julie-portfolio/images/projects/bank-policy.jpg"
 featured: true
 order: 1
 role: "Product Manager & AI Engineer"
@@ -22,7 +22,7 @@ However, bringing RAG to an enterprise introduces a critical business constraint
 ### Privacy vulnerability in the RAG pipeline
 
 To understand this constraint, consider the procedure of a RAG pipeline:
-![RAG pipeline — 4 steps from document to answer](/images/projects/image1.jpg)
+![RAG pipeline — 4 steps from document to answer](/julie-portfolio/images/projects/image1.jpg)
 1. **Chunking**: The system breaks a massive PDF into smaller paragraph-sized chunks.
 2. **Embedding**: These text chunks are passed through an embedding model, converting words into mathematical vectors.
 3. **Storage**: These vectors are saved in a Vector Database.
@@ -39,7 +39,7 @@ To understand this constraint, consider the procedure of a RAG pipeline:
 ## 2. Solution architecture
 
 To achieve this, I decoupled the processing pipeline, prioritizing local, air-gapped execution for all sensitive data-processing steps:
-![System architecture flow](/images/projects/image2.jpg)
+![System architecture flow](/julie-portfolio/images/projects/image2.jpg)
 
 - **Document Parsing**: I utilized `PyMuPDF4LLM` to process PDFs, converting complex corporate layouts and tables into clean Markdown, preserving grid structure so the LLM can accurately understand data relationships.
 - **Vectorization**: Instead of a commercial API, I implemented an open-source, self-hosted model (`all-MiniLM-L6-v2` via HuggingFace), ensuring no document data leaves the host server during ingestion [3].
@@ -48,7 +48,7 @@ To achieve this, I decoupled the processing pipeline, prioritizing local, air-ga
 - **Frontend UI**: A custom Streamlit interface, heavily modified from the default configuration to deliver a clean, enterprise-grade UX.
 
 Below is an example of a question and system response for the account opening policy.
-![LLM response example 1](/images/projects/image3.jpg)
+![LLM response example 1](/julie-portfolio/images/projects/image3.jpg)
 
 ---
 
@@ -59,7 +59,7 @@ Below is an example of a question and system response for the account opening po
 During early testing, when asked a policy question not explicitly covered in the bank's documents, the LLM would confidently hallucinate an answer based on generic banking practices from its training data [4]. In a regulated enterprise, an AI guessing a policy is a catastrophic compliance risk.
 
 The following example illustrates this case.
-![LLM response example 2](/images/projects/image4.jpg)
+![LLM response example 2](/julie-portfolio/images/projects/image4.jpg)
 **Solution:** I implemented a two-pronged defense using **parameter tuning** and **prompt engineering**.
 First, I hardcoded the LLM's `temperature` to `0`. By forcing temperature to absolute zero, I stripped the model of its creative autonomy, making outputs strictly deterministic.
 Second, I rewrote the core system prompt to explicitly restrict the model's universe of knowledge:
@@ -73,16 +73,16 @@ CRITICAL RULES:
 ```
 
 Below is the LLM’s revised response following these changes.
-![LLM response example 3](/images/projects/image5.jpg)
+![LLM response example 3](/julie-portfolio/images/projects/image5.jpg)
 ### Challenge 2 — Stateless LLM
 
 Out of the box, LLMs have no memory of a conversation. Even with RAG providing document context, the model struggles with follow-up questions due to the absence of prior interaction awareness. See the example below.
-![LLM response example 4](/images/projects/image6.jpg)
+![LLM response example 4](/julie-portfolio/images/projects/image6.jpg)
 **Solution:** I engineered conversational memory directly into the application loop. Using Streamlit's `session_state`, I cached the dialogue. Before sending each new prompt, logic iterates through this cache, formats prior interactions into LangChain `HumanMessage` and `AIMessage` constructs, and injects the entire transcript back into the model's context window. 
 
 This grounded the model and enabled seamless conversational continuity, as illustrated in the examples below.
-![LLM response example 5](/images/projects/image7.jpg)
-![LLM response example 6](/images/projects/image8.jpg)
+![LLM response example 5](/julie-portfolio/images/projects/image7.jpg)
+![LLM response example 6](/julie-portfolio/images/projects/image8.jpg)
 ### Challenge 3 — Inference latency
 
 During early development, I ran the entire pipeline, including the generation LLM, locally via Ollama. While this was completely secure, passing large blocks of retrieved PDF text into a local model running on standard consumer hardware created severe inference latency (**4 - 5 minutes** to generate a response). 
