@@ -36,8 +36,8 @@ const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
           <ProjectCard
             title={project.data.title}
             description={project.data.description}
-            image={`${import.meta.env.BASE_URL}/${project.data.image}`}
-            url={`${import.meta.env.BASE_URL}/projects/${project.slug}`}
+            image={`/${project.data.image}`}
+            url={`/projects/${project.slug}`}
           />
         ))}
       </div>
