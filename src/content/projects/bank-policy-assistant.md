@@ -1,6 +1,6 @@
 ---
 title: "Bank Policy Assistant through RAG"
-description: "A privacy-first AI assistant that gives bank employees instant access to internal policy documents without a single byte of data leaving the corporate firewall."
+description: "An AI assistant that gives bank employees instant access to internal policy processes."
 image: "images/projects/bank-policy.jpg"
 featured: true
 order: 1
@@ -13,7 +13,7 @@ tags: ["AI", "RAG", "Fintech", "Privacy"]
 
 ## 1. Context and problem
 
-In highly regulated industries like banking, employees constantly navigate dense, complex policy documents from Account Opening Procedures to Compliance Guidelines. Finding exact answers quickly saves time and makes everyone's job a lot easier.
+In highly regulated industries like banking, employees have to navigate many complex policy documents. Finding exact answers quickly saves time and improves work efficiency.
 
 I chose **Retrieval-Augmented Generation (RAG)** for this architecture. RAG searches a database for the exact relevant paragraphs and feeds them to the LLM at the moment user send the query [1]. This ensures the AI's answers are always based on the latest documents.
 
@@ -28,7 +28,7 @@ To understand this constraint, consider the procedure of a RAG pipeline:
 3. **Storage**: These vectors are saved in a Vector Database.
 4. **Generation**: When a user asks a question, it is also vectorized, the database finds matching document numbers, and the raw text is sent to an LLM to generate an answer.
 
-**The vulnerability occurs at steps 2 and 4.** If standard cloud APIs (like ChatGPT's free tier) are used for vectorization or generation, bank internal policies risk leaking outside the corporate firewall and violating compliance frameworks like SOC 2, GDPR, and GLBA  [2]. To solve this, banks must either run models locally, or rely on Enterprise APIs with zero data-retention guarantees.  
+**The vulnerability occurs at steps 2 and 4.** If standard cloud APIs (like ChatGPT's free tier) are used for vectorization or generation, bank internal policies risk leaking outside the corporate firewall, violating compliance frameworks like SOC 2, GDPR, and GLBA [2].  
 
 **The goal of this project** was to build a **Bank Policy Assistant** that:
 1. Provides instant access to internal documents using Enterprise APIs (like Google Gemini and Groq) to ensure data privacy.
@@ -90,12 +90,11 @@ This enabled conversational continuity, as illustrated in the examples below.
 During early development, I ran the entire pipeline, including the generation LLM, locally via Ollama. However, running a local LLM created slow response time (**4 - 5 minutes** to generate a response). 
 
 **Solution:** I used Google Gemini's API for vectorization and the Groq API for text generation.
-
 Groq's LPUs are engineered specifically for ultra-fast LLM inference, reducing response time from minutes to **milliseconds**.
 
 ---
 
-## 4. Current Application vs. Production-Grade Banking Deployment
+## 4. Current Application vs. Production-Grade Deployment
 
 Due to resource constraints, the current implementation differs from a real-world bank deployment, as detailed below:
 

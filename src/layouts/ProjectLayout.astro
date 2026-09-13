@@ -1,7 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 
-const { frontmatter } = Astro.props;
+const { frontmatter, headings } = Astro.props;
 ---
 
 <BaseLayout
@@ -13,63 +13,115 @@ const { frontmatter } = Astro.props;
 
     <!-- ── Narrow header column ───────────────────────────── -->
     <header class="project-header">
-      <div class="header-inner">
+      <div class="project-layout-container">
+        <!-- Empty placeholder to align header with content -->
+        <div class="project-sidebar-placeholder">
+          <a href="/projects" class="back-link">← Projects</a>
+        </div>
+        
+        <div class="header-inner">
+          <!-- Meta line: role, company, year -->
+          {frontmatter.role && (
+            <p class="project-meta">
+              <strong>{frontmatter.role}</strong>
+              {frontmatter.company && `, ${frontmatter.company}`}
+              {frontmatter.year && `, ${frontmatter.year}`}
+            </p>
+          )}
 
-        <a href="/projects" class="back-link">← Projects</a>
+          <h1 class="project-title">{frontmatter.title}</h1>
+          <p class="project-lead">{frontmatter.description}</p>
 
-        <!-- Meta line: role, company, year -->
-        {frontmatter.role && (
-          <p class="project-meta">
-            <strong>{frontmatter.role}</strong>
-            {frontmatter.company && `, ${frontmatter.company}`}
-            {frontmatter.year && `, ${frontmatter.year}`}
-          </p>
-        )}
+          <!-- ── Hero image ─────────────────────────────────────── -->
+          {frontmatter.image && (
+            <div class="project-hero">
+              <img 
+                src={`/${frontmatter.image}`} 
+                alt={frontmatter.title} 
+              />
+            </div>
+          )}
 
-        <h1 class="project-title">{frontmatter.title}</h1>
-        <p class="project-lead">{frontmatter.description}</p>
-
-        <!-- ── Hero image ─────────────────────────────────────── -->
-        {frontmatter.image && (
-          <div class="project-hero">
-            <img 
-              src={`/${frontmatter.image}`} 
-              alt={frontmatter.title} 
-            />
-          </div>
-        )}
-
-        <!-- Demo / Repo links -->
-        {(frontmatter.demoURL || frontmatter.repoURL) && (
-          <div class="project-links">
-            {frontmatter.demoURL && (
-              <a href={frontmatter.demoURL} target="_blank" rel="noopener noreferrer" class="project-cta">
-                View live app →
-              </a>
-            )}
-            {frontmatter.repoURL && (
-              <a href={frontmatter.repoURL} target="_blank" rel="noopener noreferrer" class="project-cta">
-                View repository →
-              </a>
-            )}
-          </div>
-        )}
+          <!-- Demo / Repo links -->
+          {(frontmatter.demoURL || frontmatter.repoURL) && (
+            <div class="project-links">
+              {frontmatter.demoURL && (
+                <a href={frontmatter.demoURL} target="_blank" rel="noopener noreferrer" class="project-cta">
+                  View live app →
+                </a>
+              )}
+              {frontmatter.repoURL && (
+                <a href={frontmatter.repoURL} target="_blank" rel="noopener noreferrer" class="project-cta">
+                  View repository →
+                </a>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </header>
 
     <!-- ── Body content (from markdown) ──────────────────── -->
     <div class="project-body">
-      <div class="project-content">
-        <slot />
+      <div class="project-layout-container">
+        
+        <!-- Sidebar TOC -->
+        <aside class="project-sidebar">
+          {headings && headings.length > 0 && (
+            <nav class="toc">
+              <h4 class="toc-title">On this page</h4>
+              <ul class="toc-list" id="toc-list">
+                {headings.filter((h: any) => h.depth === 2).map((heading: any) => (
+                  <li class={`toc-item depth-${heading.depth}`}>
+                    <a href={`#${heading.slug}`} class="toc-link">{heading.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+        </aside>
+
+        <div class="project-content">
+          <slot />
+        </div>
       </div>
     </div>
 
     <!-- ── Footer nav ─────────────────────────────────────── -->
     <footer class="project-footer">
-      <a href="/projects" class="back-link-footer">← Back to all projects</a>
+      <div class="project-layout-container">
+        <div class="project-sidebar-placeholder"></div>
+        <div class="footer-inner">
+          <a href="/projects" class="back-link-footer">← Back to all projects</a>
+        </div>
+      </div>
     </footer>
 
   </article>
+
+<script>
+  // Active TOC highlight script
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+        
+        if (entry.isIntersecting) {
+          document.querySelectorAll('.toc-link').forEach(link => link.classList.remove('active'));
+          if (tocLink) tocLink.classList.add('active');
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -80% 0px' // Adjust to trigger when heading is near top
+    });
+
+    // Observe all h2 and h3 elements inside .project-content
+    document.querySelectorAll('.project-content h2, .project-content h3').forEach((section) => {
+      observer.observe(section);
+    });
+  });
+</script>
 </BaseLayout>
 
 <style>
@@ -84,10 +136,43 @@ const { frontmatter } = Astro.props;
     background: #ffffff;
   }
 
-  .header-inner {
-    max-width: 850px;
+  .project-layout-container {
+    max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 48px;
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    align-items: flex-start;
+  }
+
+  .project-sidebar-placeholder,
+  .project-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+  }
+
+  .project-sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 120px; /* Pushed down to clear the fixed header */
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+  }
+
+  /* Hide scrollbar for cleaner look */
+  .project-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  .project-sidebar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .header-inner {
+    flex: 1;
+    max-width: none;
+    min-width: 0;
   }
 
   .back-link {
@@ -97,7 +182,6 @@ const { frontmatter } = Astro.props;
     letter-spacing: 0.04em;
     color: #1a1a1a;
     text-decoration: none;
-    margin-bottom: 40px;
     opacity: 0.5;
     transition: opacity 0.2s ease;
   }
@@ -164,9 +248,7 @@ const { frontmatter } = Astro.props;
 
   /* ─── Hero image ─────────────────────────────────────────── */
   .project-hero {
-    max-width: 850px;
-    margin: 0 auto 80px;
-    padding: 0 48px;
+    margin: 0 0 80px;
   }
 
   .project-hero img {
@@ -185,9 +267,60 @@ const { frontmatter } = Astro.props;
   }
 
   .project-content {
-    max-width: 850px;
-    margin: 0 auto;
-    padding: 0 48px;
+    flex: 1;
+    max-width: none;
+    min-width: 0;
+  }
+
+  /* ── TOC Styles ────────────── */
+  .toc {
+    padding-top: 10px;
+  }
+
+  .toc-title {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    margin: 0 0 1rem 0;
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .toc-item {
+    margin: 0;
+  }
+
+  .toc-item.depth-3 {
+    padding-left: 1rem;
+  }
+
+  .toc-link {
+    display: block;
+    padding: 0.5rem 0 0.5rem 1rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    color: #555;
+    text-decoration: none;
+    line-height: 1.4;
+    text-align: left;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+  }
+
+  .toc-link:hover,
+  .toc-link.active {
+    color: #1a1a1a;
+    border-left-color: #1a1a1a;
+    font-weight: 500;
   }
 
   /* ── Markdown content styles ────────────── */
@@ -201,6 +334,7 @@ const { frontmatter } = Astro.props;
     margin: 3rem 0 1.25rem;
     line-height: 1.2;
     font-variant-numeric: lining-nums; 
+    scroll-margin-top: 140px;
   }
 
   .project-content :global(h3) {
@@ -212,6 +346,7 @@ const { frontmatter } = Astro.props;
     margin: 2.5rem 0 1rem;
     line-height: 1.25;
     font-variant-numeric: lining-nums; 
+    scroll-margin-top: 140px;
   }
 
   .project-content :global(h4) {
@@ -281,6 +416,8 @@ const { frontmatter } = Astro.props;
     margin: 2rem 0;
     font-family: var(--font-sans);
     font-size: 0.875rem;
+    display: block;
+    overflow-x: auto;
   }
 
   .project-content :global(th) {
@@ -352,10 +489,14 @@ const { frontmatter } = Astro.props;
 
   /* ─── Footer nav ─────────────────────────────────────────── */
   .project-footer {
-    max-width: 850px;
-    margin: 0 auto;
-    padding: var(--spacing-xl) 48px var(--spacing-3xl);
     border-top: 1px solid var(--color-border);
+    padding: var(--spacing-xl) 0 var(--spacing-3xl);
+  }
+
+  .footer-inner {
+    flex: 1;
+    max-width: none;
+    min-width: 0;
   }
 
   .back-link-footer {
@@ -373,11 +514,29 @@ const { frontmatter } = Astro.props;
   }
 
   /* ─── Responsive ─────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .project-layout-container {
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .project-sidebar-placeholder {
+      display: none; /* Hide placeholder on mobile */
+    }
+
+    .project-sidebar {
+      position: static;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .back-link {
+      margin-bottom: 0;
+    }
+  }
+
   @media (max-width: 768px) {
-    .header-inner,
-    .project-hero,
-    .project-content,
-    .project-footer {
+    .project-layout-container {
       padding-left: 24px;
       padding-right: 24px;
     }
