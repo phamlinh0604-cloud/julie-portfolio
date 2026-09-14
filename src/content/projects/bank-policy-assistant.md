@@ -31,7 +31,7 @@ The prototype follows the core architecture that could be used in a real banking
 
 ### How RAG works
 The system has two main stages: document indexing and question answering.
-
+![RAG pipeline — 4 steps from document to answer](/images/projects/image1.jpg)
 
 **Document indexing**
 
