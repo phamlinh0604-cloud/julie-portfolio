@@ -1,150 +1,88 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import CTAMinimal from '../components/CTAMinimal.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CTAMinimal from "../components/CTAMinimal.astro";
 ---
 
-<BaseLayout 
-  title="About Me" 
-  description="Learn more about Julie Pham, Product Manager specializing in fintech and digital products"
->
+<BaseLayout title="About Me" description="Learn more about Julie Pham">
   <div class="about-page">
     <div class="container">
       <!-- Intro Section -->
       <section class="intro-section">
         <div class="intro-content">
           <div class="avatar-wrapper">
-            <img src="/images/avatar/ava2.jpg" alt="Julie Pham" class="avatar" />
+            <img
+              src="/images/avatar/ava2.jpg"
+              alt="Julie Pham"
+              class="avatar"
+            />
           </div>
           <div class="intro-text">
-            <h1 class="page-title">About Me</h1>
-            <p class="lead">
-              Hi, I'm Julie Pham and I am a product manager enthusiastic about turning AI capabilities into scalable, business-driven solutions.
-            </p>
+            <h1 class="page-title">A little bit about me 👋</h1>
           </div>
         </div>
       </section>
-      
-      <!-- Story Section -->
-      <section class="story-section">
-        <h2 class="section-heading">My Story</h2>
-        <div class="story-content">
-          <p>
-            My professional background is in Business and Product strategy and management, developed through my experience at <strong>Grab</strong> and <strong>Techcombank</strong>.
-          </p>
-          <p>
-            I led teams around making digital financial products, focusing on SMEs and individuals who are underserved by traditional financial services. I've led cross-functional teams to build shop-now-pay-later products for small business owners & cash loan products for drivers and small business owners from 0 to 1.
-          </p>
-        </div>
-      </section>
-      
-      <!-- Why I Do This Section -->
-      <section class="motivation-section">
-        <h2 class="section-heading">My learning journey</h2>
-        <div class="motivation-content">
-          <p>
-            These experiences sparked my curiosity about how technology, data, and AI can further transform digital products. 
-          </p>
-          <p>  
-            That's why I spent a year pursuing a master’s degree in <strong>Information Management</strong> at KU Leuven, deepening my understanding of emerging technologies and preparing myself to grow into a product manager who can build digital solutions that bridge business needs with user impact.
-          </p>
-        </div>
-      </section>
-      
-      <!-- Current Focus Section -->
-      <section class="current-section">
-        <h2 class="section-heading">What I'm Learning Now</h2>
-        
-        <div class="current-grid">
-          <article class="current-card">
-            <div class="card-image-wrapper">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                <path d="m11.5 11.5 2.5-2.5"></path>
-                <path d="m11.5 6.5 2.5 2.5"></path>
-                <path d="M9 9h.01"></path>
-                <path d="M14 9h.01"></path>
-              </svg>
-            </div>
-            <h3 class="card-title">Large Language Models</h3>
-            <p class="card-desc">Researching LLMs, information retrieval and soft guardrails to design reliable, governed AI applications and advanced agentic workflows.</p>
-          </article>
 
-          <article class="current-card">
-            <div class="card-image-wrapper">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-                <rect x="9" y="9" width="6" height="6"></rect>
-                <line x1="9" y1="1" x2="9" y2="4"></line>
-                <line x1="15" y1="1" x2="15" y2="4"></line>
-                <line x1="9" y1="20" x2="9" y2="23"></line>
-                <line x1="15" y1="20" x2="15" y2="23"></line>
-                <line x1="20" y1="9" x2="23" y2="9"></line>
-                <line x1="20" y1="14" x2="23" y2="14"></line>
-                <line x1="1" y1="9" x2="4" y2="9"></line>
-                <line x1="1" y1="14" x2="4" y2="14"></line>
-              </svg>
-            </div>
-            <h3 class="card-title">Requirement Engineering</h3>
-            <p class="card-desc">Applying my expertise in domain modeling to translate ambiguous client needs into concrete, technically feasible, and scalable AI architectures.</p>
-          </article>
+      <section class="about-section">
+        <p class="about-text">
+          By day, I’m a Product Manager who likes turning ideas into actual
+          things.
+        </p>
+        <p class="about-text">
+          I spent 3 years managing cash and liquidity products for large
+          corporations at Techcombank, followed by 4 years building digital
+          lending products from 0 → 1 at Grab. I’ve also led cross-functional
+          teams across business and security projects.
+        </p>
+        <p class="about-text">
+          And somewhere along the way, I fell down the AI rabbit hole 🤖. These
+          days, I’m working with a financial institution on AI application
+          security.
+        </p>
+      </section>
 
-          <article class="current-card">
-            <div class="card-image-wrapper">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m5 8 6 6"></path>
-                <path d="m4 14 6-6 2-3"></path>
-                <path d="M2 5h12"></path>
-                <path d="M7 2h1"></path>
-                <path d="m22 22-5-10-5 10"></path>
-                <path d="M14 18h6"></path>
-              </svg>
-            </div>
-            <h3 class="card-title">Dutch Language</h3>
-            <p class="card-desc">Learning Dutch to better immerse myself in Belgian culture and communicate confidently in professional and personal situations.</p>
-          </article>
-        </div>
+      <section class="list-section">
+        <h2 class="section-heading">Things I genuinely enjoy:</h2>
+        <ul class="about-list">
+          <li>
+            Turning ideas into things (and then immediately thinking about how
+            to make them better)
+          </li>
+          <li>Being curious and learning things</li>
+          <li>
+            Thinking about how we can use AI in a thoughtful and responsible way
+          </li>
+        </ul>
       </section>
-      
-      <!-- Experience Highlights -->
-      <section class="experience-section">
-        <h2 class="section-heading">Experience Highlights</h2>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <h3 class="timeline-title">KU Leuven [2025 - Current]</h3>
-              <p class="timeline-role">Master's in Information Management</p>
-              <p class="timeline-description">
-                Currently deepening knowledge in emerging technologies, data management, and AI applications for digital products.
-              </p>
-            </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <h3 class="timeline-title">Grab [2021 - 2025]</h3>
-              <p class="timeline-role">Assistant Manager - Financial Services</p>
-              <p class="timeline-description">
-                Led development of digital loan products for individuals and SMEs, serving underserved communities.
-              </p>
-            </div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <h3 class="timeline-title">Techcombank [2018 - 2021]</h3>
-              <p class="timeline-role">Product Management</p>
-              <p class="timeline-description">
-                Product Owner of account services for corporate customer segment. Designed tailored cash management solutions for corporates, streamlining fund management for enhanced financial efficiency.
-              </p>
-            </div>
-          </div>
-          
-        </div>
+
+      <section class="list-section">
+        <h2 class="section-heading">
+          If I had to pick 3 things I’m probably best at:
+        </h2>
+        <ul class="about-list">
+          <li>Finding ways to improve things</li>
+          <li>Bringing some clarity when everything feels messy</li>
+          <li>
+            Being annoyingly disciplined when I’ve decided to do something
+          </li>
+        </ul>
       </section>
-      
+
+      <section class="list-section">
+        <h2 class="section-heading">A few random facts:</h2>
+        <ul class="about-list">
+          <li>
+            I’ve lived in 2 countries — Vietnam and Belgium — across 4 cities,
+            and travelled to around 8 countries so far. Hopefully many more to
+            come!
+          </li>
+          <li>
+            Outside of work, you’ll probably find me playing badminton or
+            hiking. Am I good at either? Not really 😆. Do I still enjoy them?
+            Very much.
+          </li>
+        </ul>
+      </section>
+
       <!-- Connect Section -->
       <CTAMinimal />
     </div>
@@ -155,266 +93,90 @@ import CTAMinimal from '../components/CTAMinimal.astro';
   .about-page {
     padding: var(--spacing-3xl) 0;
   }
-  
+
   /* Intro Section */
   .intro-section {
-    margin-bottom: var(--spacing-3xl);
+    margin-bottom: var(--spacing-xl);
   }
-  
+
   .intro-content {
     display: flex;
     align-items: center;
     gap: var(--spacing-2xl);
-    max-width: 900px;
   }
-  
+
+  .intro-text {
+    flex: 1;
+  }
+
   .avatar-wrapper {
     flex-shrink: 0;
   }
-  
-  .avatar,
-  .avatar-placeholder {
+
+  .avatar {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     object-fit: cover;
     border: 0px solid var(--color-accent);
   }
-  
-  .avatar-placeholder {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .avatar-initials {
-    font-size: var(--text-5xl);
-    font-weight: 700;
-    color: white;
-  }
-  
+
   .page-title {
     font-size: var(--text-5xl);
     font-weight: 700;
     margin-bottom: var(--spacing-md);
   }
-  
+
   .lead {
     font-size: var(--text-xl);
     color: var(--color-text-muted);
     line-height: 1.6;
+    margin-bottom: var(--spacing-md);
   }
-  
+
   /* Section Styles */
-  .story-section,
-  .motivation-section,
-  .current-section,
-  .experience-section {
-    margin-bottom: var(--spacing-3xl);
-    max-width: 900px;
+  .about-section,
+  .list-section {
+    margin-bottom: var(--spacing-lg);
   }
-  
+
+  .about-text {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-md);
+  }
+
   .section-heading {
     font-size: var(--text-3xl);
     font-weight: 700;
     margin-bottom: var(--spacing-lg);
     color: var(--color-text);
   }
-  
-  .story-content p,
-  .motivation-content p {
+
+  .about-list {
+    list-style: disc;
+    padding-left: var(--spacing-lg);
+    margin: 0;
+  }
+
+  .about-list li {
     font-size: var(--text-lg);
     color: var(--color-text-muted);
     line-height: 1.8;
-    margin-bottom: var(--spacing-md);
-  }
-  
-  /* Current Focus Grid */
-  .current-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-xl);
-  }
-  
-  .current-card {
-    padding: var(--spacing-lg);
-    background: var(--color-bg-secondary);
-    border-radius: 12px;
-    border: 1px solid var(--color-border);
-    transition: all var(--transition-base);
-  }
-  
-  .current-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--color-accent);
-  }
-  
-  .card-icon {
-    font-size: 3rem;
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .current-card h3 {
-    font-size: var(--text-xl);
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .current-card p {
-    color: var(--color-text-muted);
-    line-height: 1.6;
-  }
-  
-  /* Timeline */
-  .timeline {
-    position: relative;
-    padding-left: var(--spacing-xl);
-  }
-  
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--color-border);
-  }
-  
-  .timeline-item {
-    position: relative;
-    margin-bottom: var(--spacing-2xl);
-  }
-  
-  .timeline-marker {
-    position: absolute;
-    left: calc(-1 * var(--spacing-xl) - 6px);
-    top: 0;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    border: 3px solid var(--color-bg);
-    box-shadow: 0 0 0 2px var(--color-accent);
-  }
-  
-  .timeline-title {
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    color: var(--color-text);
     margin-bottom: var(--spacing-xs);
   }
-  
-  .timeline-role {
-    font-size: var(--text-lg);
-    color: var(--color-accent);
-    font-weight: 600;
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .timeline-description {
-    font-size: var(--text-base);
-    color: var(--color-text-muted);
-    line-height: 1.6;
-  }
-  
-  /* Connect Section */
-  .connect-section {
-    background: var(--color-bg-secondary);
-    border-radius: 16px;
-    padding: var(--spacing-3xl);
-    margin-top: var(--spacing-3xl);
-  }
-  
-  .connect-content {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  
-  .connect-title {
-    font-size: var(--text-4xl);
-    font-weight: 700;
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .connect-text {
-    font-size: var(--text-xl);
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  .connect-buttons {
-    display: flex;
-    gap: var(--spacing-md);
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .btn {
-    display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: var(--text-base);
-    transition: all var(--transition-base);
-  }
-  
-  .btn-primary {
-    background: var(--color-accent);
-    color: white;
-    box-shadow: var(--shadow-md);
-  }
-  
-  .btn-primary:hover {
-    background: var(--color-accent-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  .btn-secondary {
-    background: transparent;
-    color: var(--color-accent);
-    border: 2px solid var(--color-accent);
-  }
-  
-  .btn-secondary:hover {
-    background: var(--color-accent);
-    color: white;
-    transform: translateY(-2px);
-  }
-  
+
   /* Mobile Responsive */
   @media (max-width: 768px) {
     .intro-content {
       flex-direction: column;
       text-align: center;
     }
-    
-    .avatar,
-    .avatar-placeholder {
+
+    .avatar {
       width: 150px;
       height: 150px;
-    }
-    
-    .current-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .timeline {
-      padding-left: var(--spacing-lg);
-    }
-    
-    .connect-buttons {
-      flex-direction: column;
-    }
-    
-    .btn {
-      width: 100%;
     }
   }
 </style>

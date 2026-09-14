@@ -71,6 +71,7 @@ body {
   font-size: var(--text-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
 }
 
 /* ─── Typography ───────────────────────────────────────────────────── */

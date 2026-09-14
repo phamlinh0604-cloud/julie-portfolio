@@ -13,33 +13,40 @@ tags: ["AI", "RAG", "Fintech", "Privacy"]
 
 ## 1. Context and problem
 
-In highly regulated industries like banking, employees have to navigate many complex policy documents. Finding exact answers quickly saves time and improves work efficiency.
+In highly regulated industries like finance and banking, employees often have to navigate many complex policy documents. 
 
-I chose **Retrieval-Augmented Generation (RAG)** for this architecture. RAG searches a database for the exact relevant paragraphs and feeds them to the LLM at the moment user send the query [1]. This ensures the AI's answers are always based on the latest documents.
+Traditionally, operational teams have to read the policy to understand the procedures and look up on the documents whenever they have a question. 
 
-However, bringing RAG to an enterprise introduces a constraint: **Data Privacy**.
+With AI, finding answers to these questions becomes much easier. However, companies cannot simply use public AI tools like ChatGPT or Claude for this since it creates security and privacy risks.
 
-### Privacy vulnerability in the RAG pipeline
-
-To understand this constraint, consider the procedure of a RAG pipeline:
-![RAG pipeline — 4 steps from document to answer](/images/projects/image1.jpg)
-1. **Chunking**: The system breaks a massive PDF into smaller paragraph-sized chunks.
-2. **Embedding**: These text chunks are passed through an embedding model, converting words into mathematical vectors.
-3. **Storage**: These vectors are saved in a Vector Database.
-4. **Generation**: When a user asks a question, it is also vectorized, the database finds matching document numbers, and the raw text is sent to an LLM to generate an answer.
-
-**The vulnerability occurs at steps 2 and 4.** If standard cloud APIs (like ChatGPT's free tier) are used for vectorization or generation, bank internal policies risk leaking outside the corporate firewall, violating compliance frameworks like SOC 2, GDPR, and GLBA [2].  
-
-**The goal of this project** was to build a **Bank Policy Assistant** that:
-1. Provides instant access to internal documents using Enterprise APIs (like Google Gemini and Groq) to ensure data privacy.
-2. Balancing a highly secure backend with a frictionless user experience.
+This raises a different question: **How could a bank build an AI assistant that can work with its internal information while controlling what information the AI can access and return?**
 
 ---
 
 ## 2. Solution architecture
 
-The architectue is broken down into 4 main steps:
-![System architecture flow](/images/projects/image2.jpg)
+For this project, I built a prototype of an AI assistant using Retrieval-Augmented Generation (RAG). Instead of asking the LLM to answer directly from its existing knowledge, RAG first retrieves relevant information from a document database and provides it to the LLM as context [1].
+
+The prototype follows the core architecture that could be used in a real banking application, while using publicly available APIs for the AI components due to the resource constraints of the project.
+
+### How RAG works
+The system has two main stages: document indexing and question answering.
+![RAG pipeline — 4 steps from document to answer](/images/projects/image1.jpg)
+
+**Document indexing**
+
+*   **Parse & chunk** — The system processes the PDF and breaks the content into smaller chunks.
+*   **Embed** — Each chunk is converted into a numerical vector that represents its meaning.
+*   **Store** — The vectors and their corresponding text are stored in a vector database.
+
+**Question answering**
+
+*   **Retrieve** — When a user asks a question, the question is also converted into a vector. The system searches the vector database for the most relevant chunks.
+*   **Generate** — The retrieved chunks are provided to the LLM as context, and the LLM generates an answer based on that information.
+
+### How I implemented it
+
+I implemented each part of this architecture using the following tools:
 
 - **Document Parsing**: I utilized `PyMuPDF4LLM` to process PDFs, converting layouts and tables into Markdown so the LLM can understand data relationships more easily.
 - **Vectorization**: I implemented Google Gemini's embedding model (`gemini-embedding-2`) for vectorization of the documents.
@@ -47,12 +54,27 @@ The architectue is broken down into 4 main steps:
 - **Generation**: I integrated Groq API for high-speed output via specialized Language Processing Units (LPUs).
 - **Frontend UI**: A custom Next.js React application, styled with Tailwind CSS.
 
-Below is an example of a question and system response for the account opening policy.
-![LLM response example 1](/images/projects/image3.jpg)
+---
+## 3. Current Application vs. Production-Grade Deployment
+
+Due to resource constraints, the current implementation differs from a real-world bank deployment, as detailed below:
+
+| Component | This Project (Current) | Real-World Bank |
+| :--- | :--- | :--- |
+| **Vector Embeddings** | Google Gemini Embeddings API | Private endpoint (e.g. Azure OpenAI) inside corporate firewall |
+| **Vector Database** | FAISS (Local/In-Memory) | Client-server vector DB for millions of documents |
+| **LLM Generation** | Groq Cloud API (LPU Inference) | Private VPC or fully localized LLM on internal GPU nodes |
+| **Infrastructure** | Vercel (Next.js Edge + Python Serverless) | Dockerized containers on internal Kubernetes clusters |
+
+
+### Application limitations
+
+- **Rate limiting**: Because the system relies on a free-tier Groq API key, concurrent users submitting queries simultaneously may experience brief rate-limit delays.
+- **Stateless Vercel deployments**: Because the backend is a stateless Python Serverless Function on Vercel, conversation memory is held entirely in the browser's React state. A hard refresh of the browser will clear the conversational history.
 
 ---
 
-## 3. Challenges across the development lifecycle
+## 4. Challenges across the development lifecycle
 
 ### Challenge 1 — The "out-of-bounds" hallucination
 
@@ -94,25 +116,6 @@ Groq's LPUs are engineered specifically for ultra-fast LLM inference, reducing r
 
 ---
 
-## 4. Current Application vs. Production-Grade Deployment
-
-Due to resource constraints, the current implementation differs from a real-world bank deployment, as detailed below:
-
-| Component | This Project (Current) | Real-World Bank |
-| :--- | :--- | :--- |
-| **Vector Embeddings** | Google Gemini Embeddings API | Private endpoint (e.g. Azure OpenAI) inside corporate firewall |
-| **Vector Database** | FAISS (Local/In-Memory) | Client-server vector DB for millions of documents |
-| **LLM Generation** | Groq Cloud API (LPU Inference) | Private VPC or fully localized LLM on internal GPU nodes |
-| **Infrastructure** | Vercel (Next.js Edge + Python Serverless) | Dockerized containers on internal Kubernetes clusters |
-
-
-### Application limitations
-
-- **Rate limiting**: Because the system relies on a free-tier Groq API key, concurrent users submitting queries simultaneously may experience brief rate-limit delays.
-- **Stateless Vercel deployments**: Because the backend is a stateless Python Serverless Function on Vercel, conversation memory is held entirely in the browser's React state. A hard refresh of the browser will clear the conversational history.
-
----
-
 ## 5. Try it yourself
 
 I invite you to test the application and evaluate the retrieval quality firsthand.
@@ -128,7 +131,7 @@ I invite you to test the application and evaluate the retrieval quality firsthan
 
 ---
 
-## References
+## 6. References
 
 1. Lewis, P., et al. (2020). *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.*
 2. OWASP Foundation (2025). *OWASP Top 10 for Large Language Model Applications.*
